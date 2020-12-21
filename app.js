@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-// app.use(verifyUser);
+app.use(verifyUser);
 
 app.use(
   '/graphql',

@@ -10,8 +10,8 @@ export const verifyUser = (req, res, next) => {
   const token = req.header('Authorization') || '';
   if (!token) return res.status(401).send('Access deneid.');
   try {
-    const verifiedUser = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verifiedUser;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.verifiedUser = verified;
     next();
   } catch (error) {
     res.status(400).send('Invalid token.');
