@@ -21,6 +21,28 @@ export const register = {
     });
     await user.save();
     const token = createJWT(user);
-    return JSON.stringify(token);
+    return token;
+  },
+};
+
+export const login = {
+  type: GraphQLString,
+  args: {
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+  },
+  async resolve(parent, args) {
+    const user = await User.find({ email: args.email });
+    if (!user) throw new Error('Incorrect email.');
+
+    const userPassword = user.map((x) => x.password);
+    const checkPassword = await bcrypt.compare(
+      args.password,
+      userPassword.toString()
+    );
+    if (!checkPassword) throw new Error('Invalid password.');
+
+    const token = createJWT(user);
+    return token;
   },
 };
