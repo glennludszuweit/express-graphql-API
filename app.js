@@ -2,12 +2,15 @@ import express from 'express';
 import env from 'dotenv';
 import mongoose from 'mongoose';
 import { graphqlHTTP } from 'express-graphql';
-import schema from './graphql/schema.js';
+import schema from './src/schema.js';
+import { verifyUser } from './src/middlewares/authenticate.js';
 
 env.config();
 const app = express();
 
 app.use(express.json());
+
+// app.use(verifyUser);
 
 app.use(
   '/graphql',
