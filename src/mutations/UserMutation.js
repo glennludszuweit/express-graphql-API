@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { GraphQLString } from 'graphql';
 import { createJWT } from '../middlewares/authenticate.js';
 import User from '../models/User.js';
@@ -11,10 +12,12 @@ export const register = {
   },
   async resolve(parent, args) {
     const { name, email, password } = args;
+    const salt = await bcrypt.genSalt(5);
+    const securedPass = await bcrypt.hash(password, salt);
     const user = new User({
       name,
       email,
-      password,
+      password: securedPass,
     });
     await user.save();
     const token = createJWT(user);
