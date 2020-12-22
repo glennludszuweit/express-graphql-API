@@ -5,7 +5,7 @@ import UserType from '../types/UserType.js';
 export const getUsers = {
   type: new GraphQLList(UserType),
   description: 'Get all users',
-  async resolve(parent, args) {
+  async resolve() {
     return await User.find();
   },
 };

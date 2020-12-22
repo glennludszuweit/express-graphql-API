@@ -11,7 +11,7 @@ export const verifyUser = (req, res, next) => {
   if (!token) return res.status(401).send('Access deneid.');
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.verifiedUser = verified;
+    req.verifiedUser = verified.user;
     next();
   } catch (error) {
     res.status(400).send('Invalid token.');

@@ -1,12 +1,15 @@
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 import { register, login } from './mutations/UserMutation.js';
-import { getUsers, getUser } from './queries/UserQuery.js';
 import { addPost } from './mutations/PostMutation.js';
+import { addComment } from './mutations/CommentMutation.js';
+import { getUsers, getUser } from './queries/UserQuery.js';
+import { getPosts, getPost } from './queries/PostQuery.js';
+import { getComments, getComment } from './queries/CommentQuery.js';
 
 const QueryType = new GraphQLObjectType({
   name: 'QueryType',
   description: 'Queries',
-  fields: { getUsers, getUser },
+  fields: { getUsers, getUser, getPosts, getPost, getComments, getComment },
 });
 
 const MutationType = new GraphQLObjectType({
@@ -16,6 +19,7 @@ const MutationType = new GraphQLObjectType({
     register,
     login,
     addPost,
+    addComment,
   },
 });
 

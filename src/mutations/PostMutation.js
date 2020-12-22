@@ -18,9 +18,9 @@ export const addPost = {
     const post = new Post({
       title,
       content,
-      authorId: verifiedUser.user._id,
+      authorId: verifiedUser._id,
     });
 
-    await post.save();
+    return await post.save();
   },
 };
