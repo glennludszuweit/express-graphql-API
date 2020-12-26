@@ -1,7 +1,11 @@
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 import { register, login } from './mutations/UserMutation.js';
 import { addPost, updatePost, deletePost } from './mutations/PostMutation.js';
-import { addComment } from './mutations/CommentMutation.js';
+import {
+  addComment,
+  updateComment,
+  deleteComment,
+} from './mutations/CommentMutation.js';
 import { getUsers, getUser } from './queries/UserQuery.js';
 import { getPosts, getPost } from './queries/PostQuery.js';
 import { getComments, getComment } from './queries/CommentQuery.js';
@@ -22,6 +26,8 @@ const MutationType = new GraphQLObjectType({
     updatePost,
     deletePost,
     addComment,
+    updateComment,
+    deleteComment,
   },
 });
 
