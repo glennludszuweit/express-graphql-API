@@ -7,16 +7,16 @@ export const addPost = {
   decription: 'Add new post',
   args: {
     title: { type: GraphQLString },
-    content: { type: GraphQLString },
+    body: { type: GraphQLString },
   },
   async resolve(parent, args, { verifiedUser }) {
     if (!verifiedUser) {
       throw new Error('Unauthorized.');
     }
-    const { title, content } = args;
+    const { title, body } = args;
     const post = new Post({
       title,
-      content,
+      body,
       authorId: verifiedUser._id,
     });
 
@@ -28,16 +28,16 @@ export const updatePost = {
   type: PostType,
   description: 'Update post',
   args: {
-    id: { type: GraphQLString },
+    postId: { type: GraphQLString },
     title: { type: GraphQLString },
-    content: { type: GraphQLString },
+    body: { type: GraphQLString },
   },
   async resolve(parent, args, { verifiedUser }) {
     if (!verifiedUser) throw new Error('Unauthorized.');
-    const { id, title, content } = args;
+    const { postId, title, body } = args;
     const post = await Post.findOneAndUpdate(
-      { _id: id, authorId: verifiedUser._id },
-      { title, content },
+      { _id: postId, authorId: verifiedUser._id },
+      { title, body },
       { new: true, validators: true }
     );
     if (!post) throw new Error('Post not found');
@@ -46,19 +46,18 @@ export const updatePost = {
 };
 
 export const deletePost = {
-  type: PostType,
-  description: 'Update post',
+  type: GraphQLString,
+  description: 'Delete post',
   args: {
-    id: { type: GraphQLString },
+    postId: { type: GraphQLString },
   },
   async resolve(parent, args, { verifiedUser }) {
     if (!verifiedUser) throw new Error('Unauthorized.');
-    const { id, title, content } = args;
     const post = await Post.findOneAndDelete({
-      _id: id,
+      _id: args.postId,
       authorId: verifiedUser._id,
     });
     if (!post) throw new Error('Post not found');
-    return post;
+    return 'Post Deleted';
   },
 };
